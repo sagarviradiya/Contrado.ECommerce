@@ -24,18 +24,17 @@ namespace Contrado.Api.Controllers
 
         }
         [HttpGet("getall")]
-        public ActionResult<IEnumerable<ProductDto>> GetAll(int page = 1, int pagesize = 10)
+        public ActionResult<IEnumerable<ProductDto>> GetAll(int page = 1, int pagesize = 10, bool includeNavigation = true)
         {
-            //return Ok(_productService.GetProductsWithPaging());
-            var products = _productService.GetProductsWithPaging();
+            var products = _productService.GetProductsWithPaging(page, pagesize, includeNavigation);
             return Ok(_mapper.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(products));
 
         }
         [HttpGet("{productId}")]
         public ActionResult<ProductForPostRequestDto> GetProduct(int productId)
         {
-            //return Ok(_productService.GetProductsWithPaging());
             var product = _productService.GetProductById(productId);
+            if (product == null) return NotFound();
             return Ok(_mapper.Map<Product, ProductForPostRequestDto>(product));
         }
 
@@ -55,11 +54,33 @@ namespace Contrado.Api.Controllers
             {
                 return BadRequest();
             }
+            if (productId != product.ProductId)
+            {   
+                return BadRequest();
+            }
             var productToUpdate = _productService.GetProductById(productId);
+            if (productToUpdate == null) return BadRequest();
+
             var productDomain = _mapper.Map<ProductForPostRequestDto, Product>(product);
-            _productService.UpdateProduct(productToUpdate,productDomain);
+
+            _productService.UpdateProduct(productToUpdate, productDomain);
+
             return Ok(product);
-            //return Ok(_mapper.Map<Product, ProductForPostRequestDto>(returnProduct));
+        }
+        [HttpDelete("deleteproduct")]
+        public ActionResult DeleteProduct(int productId)
+        {
+            if (productId == 0)
+            {
+                return BadRequest();
+            }
+
+            var productToUpdate = _productService.GetProductById(productId);
+            if (productToUpdate == null) return BadRequest();
+
+            _productService.RemoveProduct(productToUpdate);
+
+            return Ok();
         }
     }
 }

@@ -22,14 +22,14 @@ namespace Contrado.Services
             return product;
         }
 
-        public Product GetProductById(int productId)
+        public Product GetProductById(int productId, bool includeNavigation = true)
         {
-            return _unitOfWork.ProductRepo.GetProduct(productId, true);
+            return _unitOfWork.ProductRepo.GetProduct(productId, includeNavigation);
         }
 
-        public IEnumerable<Product> GetProductsWithPaging(int page = 1, int pageSize = 10)
+        public IEnumerable<Product> GetProductsWithPaging(int page = 1, int pageSize = 10, bool includeNavigation = true)
         {
-            return _unitOfWork.ProductRepo.GetProducts(page, pageSize);
+            return _unitOfWork.ProductRepo.GetProducts(page, pageSize, includeNavigation);
         }
 
         public void RemoveProduct(Product product)

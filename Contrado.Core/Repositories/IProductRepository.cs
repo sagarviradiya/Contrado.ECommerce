@@ -7,7 +7,7 @@ namespace Contrado.Core.Repositories
 {
     public interface IProductRepository
     {
-        IEnumerable<Product> GetProducts(int page = 1, int pageSize = 10);
+        IEnumerable<Product> GetProducts(int page = 1, int pageSize = 10,bool includeNavigation = true);
         Product GetProduct(int productId, bool includeNavigation);
         IEnumerable<Product> Find(Func<Product, bool> predicate);
         void AddProduct(Product product);

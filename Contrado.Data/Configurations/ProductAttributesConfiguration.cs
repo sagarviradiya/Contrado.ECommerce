@@ -23,13 +23,13 @@ namespace Contrado.Data.Configurations
             builder.HasOne(d => d.AttributeLookup)
                 .WithMany(e => e.ProductAttributes)
                 .HasForeignKey(d => d.AttributeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_ProductAttribute_ProductAttributeLookup");
 
             builder.HasOne(d => d.Product)
                 .WithMany(pa=>pa.ProductAttributes)
                 .HasForeignKey(pa => pa.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_ProductAttribute_Product");
             builder.ToTable("ProductAttribute");
 

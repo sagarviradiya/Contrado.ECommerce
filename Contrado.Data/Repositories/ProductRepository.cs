@@ -26,30 +26,37 @@ namespace Contrado.Data.Repositories
 
         }
 
-        public Product GetProduct(int productId, bool includeNavigation)
+        public Product GetProduct(int productId, bool includeNavigation = true)
         {
             if (includeNavigation)
             {
                 return _dbContext.Products
-                   .Include(x => x.ProductCategory)
-                .ThenInclude(s => s.ProductAttributeLookup)
-                 .Include(a => a.ProductAttributes)
-                 .Where(s => s.ProductId == productId).FirstOrDefault();
+                    .Include(x => x.ProductCategory)
+                    .ThenInclude(s => s.ProductAttributeLookup)
+                    .Include(a => a.ProductAttributes)
+                    .Where(s => s.ProductId == productId)
+                    .FirstOrDefault();
             }
             return _dbContext.Products.Find(productId);
         }
 
-        public IEnumerable<Product> GetProducts(int page = 1, int pageSize = 10)
+        public IEnumerable<Product> GetProducts(int page = 1, int pageSize = 10, bool includeNavigation = true)
         {
             var pageCount = (double)_dbContext.Products.ToList().Count / pageSize;
             pageCount = (int)Math.Ceiling(pageCount);
 
             var skip = (page - 1) * pageSize;
+            if (includeNavigation)
+            {
+                return _dbContext.Products
+                         .Include(x => x.ProductCategory)
+                         .ThenInclude(s => s.ProductAttributeLookup)
+                         .Include(a => a.ProductAttributes)
+                         .Skip(skip).Take(pageSize)
+                         .ToList();
+            }
             return _dbContext.Products
-                .Include(x => x.ProductCategory)
-                .ThenInclude(s => s.ProductAttributeLookup)
-                 .Include(a => a.ProductAttributes)
-                 .Skip(skip).Take(pageSize)
+                    .Skip(skip).Take(pageSize)
                     .ToList();
         }
 
