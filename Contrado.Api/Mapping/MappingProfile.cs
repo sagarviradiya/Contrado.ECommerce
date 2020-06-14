@@ -21,6 +21,9 @@ namespace Contrado.Api.Mapping
                           AttributeName = y.AttributeLookup.AttributeName
                       }).ToList()));
 
+            CreateMap<ProductCategory, ProductCategoryDto>();
+
+            CreateMap<Product, ProductDto>();
 
             // DTO to Domain
             CreateMap<ProductForPostRequestDto, Product>()
@@ -38,8 +41,11 @@ namespace Contrado.Api.Mapping
                         attributes.Add(attribute);
                     }
                     d.ProductAttributes = attributes;
-
                 });
+            CreateMap<ProductCategoryDto, ProductCategory>();
+
+            CreateMap<ProductDto, Product>();
+
         }
     }
 }

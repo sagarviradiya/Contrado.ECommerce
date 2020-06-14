@@ -12,6 +12,6 @@ namespace Contrado.Api.Dtos
         public string ProdName { get; set; }
         public string ProdDescription { get; set; }
 
-        public virtual ProductCategoryDto ProductCategory { get; set; }
+        public  ProductCategoryDto ProductCategory { get; set; }
     }
 }

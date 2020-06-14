@@ -30,7 +30,11 @@ namespace Contrado.Data.Repositories
         {
             if (includeNavigation)
             {
-                return _dbContext.Products.Include(c => c.ProductCategory).ToList().Find(p => p.ProductId == productId);
+                return _dbContext.Products
+                   .Include(x => x.ProductCategory)
+                .ThenInclude(s => s.ProductAttributeLookup)
+                 .Include(a => a.ProductAttributes)
+                 .Where(s => s.ProductId == productId).FirstOrDefault();
             }
             return _dbContext.Products.Find(productId);
         }

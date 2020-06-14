@@ -23,20 +23,20 @@ namespace Contrado.Api.Controllers
             this._mapper = mapper;
 
         }
-        [HttpGet]
+        [HttpGet("getall")]
         public ActionResult<IEnumerable<ProductDto>> GetAll(int page = 1, int pagesize = 10)
         {
             //return Ok(_productService.GetProductsWithPaging());
             var products = _productService.GetProductsWithPaging();
-            return Ok(_mapper.Map<IEnumerable<Product>, IEnumerable<ProductForPostRequestDto>>(products));
+            return Ok(_mapper.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(products));
 
         }
         [HttpGet("{productId}")]
-        public ActionResult<ProductDto> GetProduct(int productId)
+        public ActionResult<ProductForPostRequestDto> GetProduct(int productId)
         {
             //return Ok(_productService.GetProductsWithPaging());
             var product = _productService.GetProductById(productId);
-            return Ok(_mapper.Map<Product, ProductDto>(product));
+            return Ok(_mapper.Map<Product, ProductForPostRequestDto>(product));
         }
 
         [HttpPost("createproduct")]
@@ -45,11 +45,21 @@ namespace Contrado.Api.Controllers
             var productDomain = _mapper.Map<ProductForPostRequestDto, Product>(product);
             var returnProduct = _productService.AddProduct(productDomain);
 
-            // Save Attributes
-            
-            
-
             return Ok(_mapper.Map<Product, ProductForPostRequestDto>(returnProduct));
+        }
+
+        [HttpPut("updateproduct")]
+        public ActionResult<ProductForPostRequestDto> UpdateProduct(int productId, ProductForPostRequestDto product)
+        {
+            if (productId == 0)
+            {
+                return BadRequest();
+            }
+            var productToUpdate = _productService.GetProductById(productId);
+            var productDomain = _mapper.Map<ProductForPostRequestDto, Product>(product);
+            _productService.UpdateProduct(productToUpdate,productDomain);
+            return Ok(product);
+            //return Ok(_mapper.Map<Product, ProductForPostRequestDto>(returnProduct));
         }
     }
 }

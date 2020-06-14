@@ -44,8 +44,10 @@ namespace Contrado.Services
             productToUpdate.ProdName = product.ProdName;
             productToUpdate.ProdDescription = product.ProdDescription;
             productToUpdate.ProductCategory = product.ProductCategory;
+            productToUpdate.ProductAttributes = product.ProductAttributes;
 
             _unitOfWork.Commit();
         }
+
     }
 }
