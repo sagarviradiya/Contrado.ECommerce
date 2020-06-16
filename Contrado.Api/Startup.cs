@@ -1,3 +1,4 @@
+using System.Text.Json;
 using AutoMapper;
 using Contrado.Core;
 using Contrado.Core.Services;
@@ -26,6 +27,7 @@ namespace Contrado.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddMvc().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
             services.AddDbContext<ECommerceDBContext>(
                 options => options.UseSqlServer(Configuration["Connections:ConnectionString"]
@@ -33,7 +35,9 @@ namespace Contrado.Api
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IProductService, ProductService>();
-            //services.AddTransient<I, ArtistService>();
+            services.AddTransient<IProductCategoryService, ProductCategoryService>();
+            services.AddTransient<IProductAttributeLookupService, ProductAttributeLookupService>();
+            
 
             services.AddSwaggerGen(options =>
             {
@@ -41,6 +45,7 @@ namespace Contrado.Api
             });
 
             services.AddAutoMapper(typeof(Startup));
+            services.AddCors();
 
         }
 
@@ -57,6 +62,9 @@ namespace Contrado.Api
                 c.RoutePrefix = "";
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contrado V1");
             });
+            app.UseCors(
+                         options => options.AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithOrigins("http://localhost:4200")
+                      );
             app.UseHttpsRedirection();
 
             app.UseRouting();

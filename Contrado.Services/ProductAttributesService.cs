@@ -20,10 +20,9 @@ namespace Contrado.Services
             _unitOfWork.Commit();
         }
 
-        public IEnumerable<ProductAttribute> Get(int productId, int attributeId = 0)
+        public IEnumerable<ProductAttribute> GetAll(int attributeId = 0)
         {
-            var attributes = _unitOfWork.ProductAttributesRepo.GetByProductId(productId, attributeId);
-            _unitOfWork.Commit();
+            var attributes = _unitOfWork.ProductAttributesRepo.GetAll(attributeId);
             return attributes;
         }
 

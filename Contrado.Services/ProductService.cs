@@ -38,14 +38,9 @@ namespace Contrado.Services
             _unitOfWork.Commit();
 
         }
-        public void UpdateProduct(Product productToUpdate, Product product)
+        public void UpdateProduct(Product productToUpdate)
         {
-            productToUpdate.ProdCatId = product.ProdCatId;
-            productToUpdate.ProdName = product.ProdName;
-            productToUpdate.ProdDescription = product.ProdDescription;
-            productToUpdate.ProductCategory = product.ProductCategory;
-            productToUpdate.ProductAttributes = product.ProductAttributes;
-
+           _unitOfWork.ProductRepo.Update(productToUpdate);
             _unitOfWork.Commit();
         }
 

@@ -12,5 +12,6 @@ namespace Contrado.Core.Repositories
         IEnumerable<Product> Find(Func<Product, bool> predicate);
         void AddProduct(Product product);
         void Remove(Product product);
+        void Update(Product product);
     }
 }

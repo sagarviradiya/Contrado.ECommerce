@@ -3,29 +3,24 @@ using Contrado.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using Contrado.Core;
 namespace Contrado.Services
 {
-    public class ProductCategoryService: IProductCategoryService
+    public class ProductCategoryService : IProductCategoryService
     {
-        IEnumerable<ProductCategory> IProductCategoryService.GetProductCategories(int productId)
+        private readonly IUnitOfWork _unitOfWork;
+        public ProductCategoryService(IUnitOfWork unitOfWork)
         {
-            throw new NotImplementedException();
+            _unitOfWork = unitOfWork;
         }
-
-        void IProductCategoryService.RemoveProductCategories(int productId, int categoryId)
+        public IEnumerable<ProductCategory> GetCategories()
         {
-            throw new NotImplementedException();
+            return _unitOfWork.ProductCategoryRepo.GetCategories();
         }
-
-        void IProductCategoryService.AddProductCategory(ProductCategory productCategory)
+        public ProductCategory GetCategoryById(int categoryId)
         {
-            throw new NotImplementedException();
+            return _unitOfWork.ProductCategoryRepo.GetById(categoryId);
         }
-
-        void IProductCategoryService.AssignCategoryToProduct(int productId, int categoryId)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

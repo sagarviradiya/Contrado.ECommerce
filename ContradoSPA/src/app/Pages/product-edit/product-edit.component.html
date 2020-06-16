@@ -1,0 +1,101 @@
+<h3>Update Product</h3>
+{{ diagnostic }}
+
+<div [hidden]="submitted" style="width: 400px;">
+  <form (ngSubmit)="updateProduct()" #productForm="ngForm">
+    <div class="form-group">
+      <label for="name">ProductName</label>
+      <input
+        type="text"
+        class="form-control"
+        id="productName"
+        required
+        [(ngModel)]="product.ProdName"
+        name="productName"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="name">Description</label>
+      <input
+        type="text"
+        class="form-control"
+        id="ProdDescription"
+        required
+        [(ngModel)]="product.ProdDescription"
+        name="ProdDescription"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="name">Category</label>
+      <select
+        name="ProductCategory"
+        (change)="this.setCategory($event.target.value)"
+        [(ngModel)]="this.product.ProdCatId"
+      >
+        <option
+          *ngFor="let category of this.categories"
+          value="{{ category.ProdCatId }}"
+          [innerText]="category.CategoryName"
+        >
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="name">Attributes</label>
+      <div
+        *ngFor="
+          let attribute of this.product.ProductAttributesDto;
+          let i = index
+        "
+      >
+        <div>
+          <input
+            type="text"
+            class="form-control"
+            id="ProductAttributeName"
+            required
+            [(ngModel)]="attribute.AttributeName"
+            name="ProductAttributeName_{{ attribute.AttributeId }}"
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            class="form-control"
+            id="ProductAttribute"
+            required
+            [(ngModel)]="attribute.AttributeValue"
+            name="ProductAttribute_{{ attribute.AttributeId }}"
+          />
+        </div>
+        <div>
+          <button
+            type="button"
+            class="btn btn-danger btn-sm"
+            (click)="removeAttribute(i)"
+          >
+            Remove
+          </button>
+        </div>
+      </div>
+      <div>
+        <button
+          type="button"
+          class="btn btn-primary mb-2"
+          (click)="addAttribute()"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+    <button
+      type="submit"
+      [disabled]="productForm.invalid"
+      class="btn btn-success"
+    >
+      Submit
+    </button>
+  </form>
+</div>

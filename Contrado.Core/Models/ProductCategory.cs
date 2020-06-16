@@ -12,8 +12,8 @@ namespace Contrado.Core.Models
         }
 
         public int ProdCatId { get; set; }
-        public string CategoryName { get; set; }
 
+        public string CategoryName { get; set; }
         public virtual ICollection<Product> Product { get; set; }
         public virtual ICollection<ProductAttributeLookup> ProductAttributeLookup { get; set; }
     }

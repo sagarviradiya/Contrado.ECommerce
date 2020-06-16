@@ -18,10 +18,12 @@ namespace Contrado.Data.Repositories
         }
 
 
-        public IEnumerable<ProductAttribute> GetByProductId(int productId, int attributeId = 0)
+        public IEnumerable<ProductAttribute> GetAll(int attributeId = 0)
         {
-            return _dbContext.ProductAttributes.Where(p => p.ProductId == productId);
-
+            if(attributeId!=0)
+            return _dbContext.ProductAttributes.Where(p => p.AttributeId == attributeId);
+            
+            return _dbContext.ProductAttributes.ToList();
         }
 
         public void Remove(ProductAttribute productAttribute)

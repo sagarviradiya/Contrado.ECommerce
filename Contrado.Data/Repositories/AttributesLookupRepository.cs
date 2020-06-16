@@ -1,5 +1,9 @@
-﻿using Contrado.Core.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Contrado.Core.Models;
 using Contrado.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 namespace Contrado.Data.Repositories
 {
     public class AttributesLookupRepository : IAttributesLookupRepository
@@ -14,14 +18,20 @@ namespace Contrado.Data.Repositories
             _dbContext.ProductAttributeLookups.Add(attributeLookup);
         }
 
-        public ProductAttributeLookup GetById(int lookupId)
+        public IEnumerable<ProductAttributeLookup> GetAll(int categoryId = 0)
         {
-            return _dbContext.ProductAttributeLookups.Find(lookupId);
+            if (categoryId != 0)
+                return _dbContext.ProductAttributeLookups.Include(a=>a.ProductAttributes).Where(i => i.ProdCatId == categoryId).ToList();
+            return _dbContext.ProductAttributeLookups.ToList();
         }
 
         public void Remove(ProductAttributeLookup attributeLookup)
         {
             _dbContext.ProductAttributeLookups.Remove(attributeLookup);
+        }
+        public void Update(ProductAttributeLookup attributeLookup)
+        {
+            _dbContext.Entry(attributeLookup).State = EntityState.Modified;
         }
     }
 }

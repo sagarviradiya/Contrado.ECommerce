@@ -8,6 +8,6 @@ namespace Contrado.Core.Repositories
         ProductCategory GetById(int categoryId);
         void Add(ProductCategory category);
         void Remove(ProductCategory category);
-        
+        IEnumerable<ProductCategory> GetCategories();
     }
 }

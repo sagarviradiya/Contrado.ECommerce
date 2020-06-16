@@ -1,7 +1,7 @@
 ﻿using Contrado.Core.Models;
 using Contrado.Core.Repositories;
 using System.Linq;
-
+using System.Collections.Generic;
 namespace Contrado.Data.Repositories
 {
     public class ProductCategoryRepository : IProductCategoryRepository
@@ -18,6 +18,10 @@ namespace Contrado.Data.Repositories
         public ProductCategory GetById(int categoryId)
         {
             return _dbContext.ProductCategories.SingleOrDefault(p => p.ProdCatId == categoryId);
+        }
+        public IEnumerable<ProductCategory> GetCategories()
+        {
+            return _dbContext.ProductCategories.ToList();
         }
 
         public void Remove(ProductCategory category)

@@ -64,5 +64,10 @@ namespace Contrado.Data.Repositories
         {
             _dbContext.Products.Remove(product);
         }
+        public void Update(Product product)
+        {
+            _dbContext.Entry(product).State = EntityState.Modified;
+
+        }
     }
 }

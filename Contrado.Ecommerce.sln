@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contrado.Services", "Contra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contrado.Data", "Contrado.Data\Contrado.Data.csproj", "{7B987D13-B45A-409A-B147-3BEEC83DE683}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dummy", "Dummy\Dummy.csproj", "{2AD10FF5-A40D-46B5-AC74-89915D78DB10}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,18 +69,6 @@ Global
 		{7B987D13-B45A-409A-B147-3BEEC83DE683}.Release|x64.Build.0 = Release|Any CPU
 		{7B987D13-B45A-409A-B147-3BEEC83DE683}.Release|x86.ActiveCfg = Release|Any CPU
 		{7B987D13-B45A-409A-B147-3BEEC83DE683}.Release|x86.Build.0 = Release|Any CPU
-		{2AD10FF5-A40D-46B5-AC74-89915D78DB10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2AD10FF5-A40D-46B5-AC74-89915D78DB10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2AD10FF5-A40D-46B5-AC74-89915D78DB10}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2AD10FF5-A40D-46B5-AC74-89915D78DB10}.Debug|x64.Build.0 = Debug|Any CPU
-		{2AD10FF5-A40D-46B5-AC74-89915D78DB10}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2AD10FF5-A40D-46B5-AC74-89915D78DB10}.Debug|x86.Build.0 = Debug|Any CPU
-		{2AD10FF5-A40D-46B5-AC74-89915D78DB10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2AD10FF5-A40D-46B5-AC74-89915D78DB10}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2AD10FF5-A40D-46B5-AC74-89915D78DB10}.Release|x64.ActiveCfg = Release|Any CPU
-		{2AD10FF5-A40D-46B5-AC74-89915D78DB10}.Release|x64.Build.0 = Release|Any CPU
-		{2AD10FF5-A40D-46B5-AC74-89915D78DB10}.Release|x86.ActiveCfg = Release|Any CPU
-		{2AD10FF5-A40D-46B5-AC74-89915D78DB10}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,6 +10,7 @@ namespace Contrado.Core
         IProductRepository ProductRepo{ get; }
         IProductCategoryRepository ProductCategoryRepo{ get; }
         IProductAttributesRepository ProductAttributesRepo { get; }
+        IAttributesLookupRepository AttributesRepo { get; }
         int Commit();
     }
 }

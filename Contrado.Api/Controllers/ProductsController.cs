@@ -15,12 +15,14 @@ namespace Contrado.Api.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
+        private readonly IProductAttributeLookupService _attibuteLookupService;
         private readonly IMapper _mapper;
 
-        public ProductsController(IProductService productService, IMapper mapper)
+        public ProductsController(IProductService productService, IProductAttributeLookupService attributeLookupService, IMapper mapper)
         {
             _productService = productService;
             this._mapper = mapper;
+            this._attibuteLookupService = attributeLookupService;
 
         }
         [HttpGet("getall")]
@@ -33,7 +35,7 @@ namespace Contrado.Api.Controllers
         [HttpGet("{productId}")]
         public ActionResult<ProductForPostRequestDto> GetProduct(int productId)
         {
-            var product = _productService.GetProductById(productId);
+            Product product = _productService.GetProductById(productId);
             if (product == null) return NotFound();
             return Ok(_mapper.Map<Product, ProductForPostRequestDto>(product));
         }
@@ -47,7 +49,7 @@ namespace Contrado.Api.Controllers
             return Ok(_mapper.Map<Product, ProductForPostRequestDto>(returnProduct));
         }
 
-        [HttpPut("updateproduct")]
+        [HttpPut("updateproduct/{productId}")]
         public ActionResult<ProductForPostRequestDto> UpdateProduct(int productId, ProductForPostRequestDto product)
         {
             if (productId == 0)
@@ -55,16 +57,54 @@ namespace Contrado.Api.Controllers
                 return BadRequest();
             }
             if (productId != product.ProductId)
-            {   
+            {
                 return BadRequest();
             }
             var productToUpdate = _productService.GetProductById(productId);
-            if (productToUpdate == null) return BadRequest();
 
-            var productDomain = _mapper.Map<ProductForPostRequestDto, Product>(product);
+            var attributes = new List<ProductAttribute>();
+            if (product.ProductAttributesDto.Count > 0)
+            {
+                productToUpdate.ProductAttributes.Clear();
+                foreach (var item in product.ProductAttributesDto)
+                {
+                    var attribute = new ProductAttribute();
 
-            _productService.UpdateProduct(productToUpdate, productDomain);
+                    if (item.AttributeId > 0 && productToUpdate.ProductAttributes.Any(c => c.AttributeId == item.AttributeId))
+                    {
+                        var attr = productToUpdate.ProductAttributes.FirstOrDefault(c => c.AttributeId == item.AttributeId);
+                        attr.AttributeLookup = new ProductAttributeLookup
+                        {
+                            
+                            AttributeName = item.AttributeName,
+                            ProdCatId = product.ProdCatId,
+                        };
+                        attr.AttributeId = item.AttributeId;
+                        attr.AttributeValue = item.AttributeValue;
+                        attr.ProductId = item.ProductId;
+                        attr.Product = productToUpdate;
+                    }
+                    else
+                    {
+                        var attributeLookup = new ProductAttributeLookup
+                        {
 
+                            AttributeName = item.AttributeName,
+                            ProdCatId = product.ProdCatId,
+
+                        };
+                        attribute.AttributeId = item.AttributeId;
+                        attribute.AttributeLookup = attributeLookup;
+                        attribute.AttributeValue = item.AttributeValue;
+                        attribute.Product = productToUpdate;
+                        attribute.ProductId = item.ProductId;
+                        productToUpdate.ProductAttributes.Add(attribute);
+
+                    }
+                   
+                }
+            }
+            _productService.UpdateProduct(productToUpdate);
             return Ok(product);
         }
         [HttpDelete("deleteproduct")]
@@ -81,6 +121,13 @@ namespace Contrado.Api.Controllers
             _productService.RemoveProduct(productToUpdate);
 
             return Ok();
+        }
+
+        [HttpGet("productattributes/{categoryId}")]
+        public ActionResult<IEnumerable<ProductAttributesDTO>> GetProductAttributesByCategoryId(int categoryId)
+        {
+            var attributesDomain = _attibuteLookupService.GetAll(categoryId);
+            return Ok(_mapper.Map<IEnumerable<ProductAttributeLookup>, IEnumerable<ProductAttributesDTO>>(attributesDomain));
         }
     }
 }

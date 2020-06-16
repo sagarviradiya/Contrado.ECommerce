@@ -7,8 +7,9 @@ namespace Contrado.Core.Repositories
 {
    public interface IAttributesLookupRepository
     {
-        ProductAttributeLookup GetById(int lookupId);
+        IEnumerable<ProductAttributeLookup> GetAll(int categoryId);
         void Add(ProductAttributeLookup productAttribute);
         void Remove(ProductAttributeLookup productAttribute);
+        void Update(ProductAttributeLookup attributeLookup);
     }
 }

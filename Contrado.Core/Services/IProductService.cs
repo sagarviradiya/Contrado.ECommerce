@@ -11,6 +11,6 @@ namespace Contrado.Core.Services
         Product GetProductById(int productId, bool includeNavigation= true);
         void RemoveProduct(Product product);
         Product AddProduct(Product product);
-        void UpdateProduct(Product productToUpdate, Product productDomain);
+        void UpdateProduct(Product productToUpdate);
     }
 }
