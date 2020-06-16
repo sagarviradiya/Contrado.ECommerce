@@ -12,8 +12,8 @@
 
 
 To run this project,,
-go to API folder --> run command "dotnet restore" then "dotnet run"
-go to SPA folder --> run command "npm install" then "ng serve"
+go to API folder --> run command "dotnet restore" then "dotnet run", and go to https://localhost:5001
+go to SPA folder --> run command "npm install" then "ng serve" and go to http://localhost:4200
 
 
 Configuration
@@ -21,5 +21,9 @@ Configuration
 Web API -> .Net Core 3.1
 Class Library -> .netstandard 2.0
 Angular --> 8.0
+
+I have added swagger for api testing
+
+For  Api testing,please go to url https://localhost:5001/index.html
 
 
