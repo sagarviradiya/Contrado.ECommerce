@@ -21,6 +21,7 @@ Configuration
 Web API -> .Net Core 3.1
 Class Library -> .netstandard 2.0
 Angular --> 8.0
+.Net framework --> 4.7.1
 
 I have added swagger for api testing
 
